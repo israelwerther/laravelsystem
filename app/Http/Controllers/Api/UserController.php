@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
 {
@@ -23,4 +24,14 @@ class UserController extends Controller
         $user = User::create($data);
         return new UserResource($user);
     }
+
+    public function show(string $id) 
+{
+    try {
+        $user = User::findOrFail($id);
+        return new UserResource($user);
+    } catch (ModelNotFoundException) {
+        return response()->json(['error' => 'Usuário não encontrado'], 404);
+    }
+}
 }
