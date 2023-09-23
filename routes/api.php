@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\UserControllerAssociateToGroup;
 use App\Http\Controllers\Api\UserGroupController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +13,8 @@ Route::post('/users', [UserController::class, 'store']);
 
 Route::apiResource('user-groups', UserGroupController::class);
 
-Route::post('users/{user_id}/groups', 'UserController@associateToGroup');
+Route::get('/users/groups', [UserControllerAssociateToGroup::class, 'index']);
+Route::post('/users/groups', [UserControllerAssociateToGroup::class, 'store']);
 
 Route::get('/', function () {
     return response()->json([
