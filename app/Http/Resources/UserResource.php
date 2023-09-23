@@ -19,7 +19,13 @@ class UserResource extends JsonResource
             'identify' => $this->id,
             'name' => strtoupper($this-> name),
             'email' => $this->email,
-            'created' => Carbon::make($this->created_at)->format('Y-m-d')
+            'created' => Carbon::make($this->created_at)->format('Y-m-d'),
+            'user_group_id' => $this->whenLoaded('userGroup', function () {
+                return $this->userGroup->id;
+            }),
+            'user_group_name' => $this->whenLoaded('userGroup', function () {
+                return $this->userGroup->name;
+            }),
         ];
     }
 }
